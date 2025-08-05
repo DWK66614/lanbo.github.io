@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机主题调查问卷</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .intro {
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .survey-form {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-group:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-title span {
+            background-color: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .option {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            padding: 12px 15px;
+            background-color: #e9f7fe;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        label:hover {
+            background-color: #d1f0ff;
+            border-color: #3498db;
+        }
+        
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-height: 120px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 10px;
+            -webkit-appearance: none;
+            background: #e0e0e0;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #2980b9;
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #009d8b, #85b836);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .options {
+                flex-direction: column;
+            }
+            
+            .option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>随机主题调查问卷</h1>
+            <p class="subtitle">您的意见对我们非常重要，请花几分钟时间完成以下问题</p>
+            <div class="topic" id="topic">加载中...</div>
+        </header>
+        
+        <div class="intro">
+            <p>感谢您参与我们的随机主题调查问卷！本问卷旨在收集不同主题的公众意见，帮助我们更好地了解社会趋势和人们的需求。</p>
+            <p>请根据您的真实感受回答以下问题，所有回答将被保密处理。问卷大约需要3-5分钟完成。</p>
+        </div>
+        
+        <form class="survey-form" id="surveyForm">
+            <!-- 问题将由JavaScript动态生成 -->
+        </form>
+        
+        <footer>
+            <p>© 2023 随机社会调查研究中心 | 所有数据将严格保密</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 随机调查主题
+            const topics = [
+                "数字生活方式调查",
+                "环境保护与可持续发展",
+                "工作与生活的平衡",
+                "健康饮食与生活习惯",
+                "未来科技与社会发展",
+                "城市交通与出行方式",
+                "社交媒体使用习惯",
+                "教育与职业发展",
+                "文化与娱乐偏好",
+                "心理健康与社会压力"
+            ];
+            
+            // 随机问题库
+            const questionBank = [
+                {
+                    type: "radio",
+                    question: "您平均每天使用智能手机的时间大约是多久？",
+                    options: ["少于1小时", "1-3小时", "3-5小时", "5小时以上"]
+                },
+                {
+                    type: "checkbox",
+                    question: "在以下环保措施中，您已经实践了哪些？（可多选）",
+                    options: ["垃圾分类", "减少一次性用品使用", "节约用水用电", "选择公共交通工具", "购买环保产品"]
+                },
+                {
+                    type: "radio",
+                    question: "您认为自己的工作与生活平衡状况如何？",
+                    options: ["非常平衡", "比较平衡", "一般", "不太平衡", "非常不平衡"]
+                },
+                {
+                    type: "range",
+                    question: "您对自己当前饮食习惯的健康程度评分？",
+                    min: 1,
+                    max: 10,
+                    minLabel: "非常不健康",
+                    maxLabel: "非常健康"
+                },
+                {
+                    type: "radio",
+                    question: "您认为以下哪种技术将在未来10年对社会产生最大影响？",
+                    options: ["人工智能", "生物技术", "可再生能源", "量子计算", "虚拟现实"]
+                },
+                {
+                    type: "checkbox",
+                    question: "您通常使用哪些交通工具出行？（可多选）",
+                    options: ["私家车", "公共交通", "自行车", "步行", "网约车"]
+                },
+                {
+                    type: "radio",
+                    question: "您平均每天花在社交媒体上的时间是多少？",
+                    options: ["少于30分钟", "30分钟-1小时", "1-2小时", "2-3小时", "3小时以上"]
+                },
+                {
+                    type: "text",
+                    question: "您认为当前教育体系最需要改进的方面是什么？"
+                },
+                {
+                    type: "checkbox",
+                    question: "您更喜欢哪些类型的娱乐活动？（可多选）",
+                    options: ["电影/电视剧", "阅读", "运动", "旅行", "游戏", "音乐", "社交聚会"]
+                },
+                {
+                    type: "range",
+                    question: "您感受到的工作/生活压力程度？",
+                    min: 1,
+                    max: 10,
+                    minLabel: "完全没有压力",
+                    maxLabel: "压力非常大"
+                },
+                {
+                    type: "radio",
+                    question: "您多久进行一次身体锻炼？",
+                    options: ["每天", "每周3-5次", "每周1-2次", "偶尔", "几乎不锻炼"]
+                },
+                {
+                    type: "text",
+                    question: "您认为社会可以做些什么来更好地支持心理健康？"
+                }
+            ];
+            
+            // 随机选择主题
+            const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+            document.getElementById('topic').textContent = randomTopic;
+            
+            // 随机选择5个问题
+            const selectedQuestions = [];
+            const questionIndices = new Set();
+            
+            while(questionIndices.size < 5) {
+                const randomIndex = Math.floor(Math.random() * questionBank.length);
+                questionIndices.add(randomIndex);
+            }
+            
+            questionIndices.forEach(index => {
+                selectedQuestions.push(questionBank[index]);
+            });
+            
+            // 生成问卷表单
+            const form = document.getElementById('surveyForm');
+            
+            selectedQuestions.forEach((q, index) => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+                
+                const questionTitle = document.createElement('div');
+                questionTitle.className = 'question-title';
+                questionTitle.innerHTML = `<span>${index + 1}</span>${q.question}`;
+                formGroup.appendChild(questionTitle);
+                
+                switch(q.type) {
+                    case 'radio':
+                    case 'checkbox':
+                        const optionsDiv = document.createElement('div');
+                        optionsDiv.className = 'options';
+                        
+                        q.options.forEach(option => {
+                            const optionDiv = document.createElement('div');
+                            optionDiv.className = 'option';
+                            
+                            const input = document.createElement('input');
+                            input.type = q.type;
+                            input.name = `q${index + 1}`;
+                            input.id = `q${index + 1}_${q.options.indexOf(option)}`;
+                            input.value = option;
+                            
+                            const label = document.createElement('label');
+                            label.htmlFor = `q${index + 1}_${q.options.indexOf(option)}`;
+                            label.appendChild(input);
+                            label.appendChild(document.createTextNode(option));
+                            
+                            optionDiv.appendChild(label);
+                            optionsDiv.appendChild(optionDiv);
+                        });
+                        
+                        formGroup.appendChild(optionsDiv);
+                        break;
+                        
+                    case 'range':
+                        const rangeContainer = document.createElement('div');
+                        rangeContainer.className = 'range-container';
+                        
+                        const range = document.createElement('input');
+                        range.type = 'range';
+                        range.name = `q${index + 1}`;
+                        range.min = q.min;
+                        range.max = q.max;
+                        range.value = Math.floor((q.min + q.max) / 2);
+                        
+                        const valueDisplay = document.createElement('span');
+                        valueDisplay.textContent = range.value;
+                        valueDisplay.style.fontWeight = 'bold';
+                        valueDisplay.style.minWidth = '30px';
+                        valueDisplay.style.textAlign = 'center';
+                        
+                        range.addEventListener('input', function() {
+                            valueDisplay.textContent = this.value;
+                        });
+                        
+                        rangeContainer.appendChild(range);
+                        rangeContainer.appendChild(valueDisplay);
+                        formGroup.appendChild(rangeContainer);
+                        
+                        const labelsDiv = document.createElement('div');
+                        labelsDiv.className = 'range-labels';
+                        
+                        const minLabel = document.createElement('span');
+                        minLabel.textContent = q.minLabel;
+                        
+                        const maxLabel = document.createElement('span');
+                        maxLabel.textContent = q.maxLabel;
+                        
+                        labelsDiv.appendChild(minLabel);
+                        labelsDiv.appendChild(maxLabel);
+                        formGroup.appendChild(labelsDiv);
+                        break;
+                        
+                    case 'text':
+                        const textarea = document.createElement('textarea');
+                        textarea.name = `q${index + 1}`;
+                        textarea.placeholder = '请在此输入您的想法...';
+                        formGroup.appendChild(textarea);
+                        break;
+                }
+                
+                form.appendChild(formGroup);
+            });
+            
+            // 添加提交按钮
+            const submitBtn = document.createElement('button');
+            submitBtn.type = 'button';
+            submitBtn.className = 'submit-btn';
+            submitBtn.textContent = '提交问卷';
+            
+            submitBtn.addEventListener('click', function() {
+                alert('感谢您完成问卷！您的意见对我们非常重要。');
+                // 在实际应用中，这里应该提交表单数据
+                form.reset();
+            });
+            
+            form.appendChild(submitBtn);
+        });
+    </script>
+</body>
+</html>
